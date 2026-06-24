@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products — TechAccessories</title>
+  <meta name="description" content="Browse all TechAccessories products: cables, chargers, headphones, and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+    }
+  </script>
+</head>
+<body class="font-sans bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2">
+        <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+        </svg>
+        <span class="text-xl font-bold text-gray-900">TechAccessories</span>
+      </a>
+      <div class="flex gap-6 items-center">
+        <a href="index.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Home</a>
+        <a href="products.html" class="nav-link active text-sm font-medium pb-0.5">Products</a>
+        <a href="contact.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="bg-gray-50 py-10 px-4 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold">All Products</h1>
+      <p class="text-gray-500 mt-2">High-quality phone accessories for every need</p>
+    </div>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="py-12 px-4">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- 1 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=250&fit=crop" alt="USB-C Cable" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-full">Cables</span>
+          <h3 class="font-semibold mt-2">USB-C Braided Cable</h3>
+          <p class="text-gray-500 text-sm mt-1">Fast charging, 2m, nylon braided</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$12.99</p>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=250&fit=crop" alt="Lightning Cable" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-full">Cables</span>
+          <h3 class="font-semibold mt-2">Lightning Cable 1.5m</h3>
+          <p class="text-gray-500 text-sm mt-1">MFi certified, reinforced connector</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$14.99</p>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=250&fit=crop" alt="65W GaN Charger" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">Chargers</span>
+          <h3 class="font-semibold mt-2">65W GaN Charger</h3>
+          <p class="text-gray-500 text-sm mt-1">3 ports, PD + QC, foldable plug</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$34.99</p>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=400&h=250&fit=crop" alt="Power Bank" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">Chargers</span>
+          <h3 class="font-semibold mt-2">20000mAh Power Bank</h3>
+          <p class="text-gray-500 text-sm mt-1">22.5W fast charge, dual output</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$44.99</p>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Wireless Headphones" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-purple-600 font-medium bg-purple-50 px-2 py-0.5 rounded-full">Audio</span>
+          <h3 class="font-semibold mt-2">Wireless Headphones</h3>
+          <p class="text-gray-500 text-sm mt-1">40hr battery, Active Noise Cancelling</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$79.99</p>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=250&fit=crop" alt="Earbuds" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-purple-600 font-medium bg-purple-50 px-2 py-0.5 rounded-full">Audio</span>
+          <h3 class="font-semibold mt-2">True Wireless Earbuds</h3>
+          <p class="text-gray-500 text-sm mt-1">IPX5, 6hr playback + 24hr case</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$49.99</p>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=250&fit=crop" alt="Phone Stand" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-orange-600 font-medium bg-orange-50 px-2 py-0.5 rounded-full">Accessories</span>
+          <h3 class="font-semibold mt-2">Adjustable Phone Stand</h3>
+          <p class="text-gray-500 text-sm mt-1">Aluminium, 360° rotation</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$18.99</p>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=250&fit=crop" alt="Screen Protector" class="w-full h-48 object-cover"/>
+        <div class="p-4">
+          <span class="text-xs text-orange-600 font-medium bg-orange-50 px-2 py-0.5 rounded-full">Accessories</span>
+          <h3 class="font-semibold mt-2">Tempered Glass Pack (3x)</h3>
+          <p class="text-gray-500 text-sm mt-1">9H hardness, oleophobic coating</p>
+          <p class="text-blue-600 font-bold text-lg mt-3">$9.99</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-8 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-semibold text-white">TechAccessories</span>
+      <nav class="flex gap-6 text-sm">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="products.html" class="hover:text-white transition-colors">Products</a>
+        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+      </nav>
+      <span class="text-xs">© 2026 TechAccessories. All rights reserved.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
