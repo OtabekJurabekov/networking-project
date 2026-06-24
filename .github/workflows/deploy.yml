@@ -1,0 +1,52 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to Contabo VPS
+    runs-on: ubuntu-latest
+    # Only run after CI passes
+    needs: []
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: 22
+          script: |
+            set -e
+
+            # Navigate to project directory
+            cd /opt/networking-project
+
+            # Pull latest code
+            git pull origin main
+
+            # Build and restart container (no downtime for static sites — build first, then swap)
+            docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
+
+            # Wait for health check to pass
+            sleep 5
+            docker inspect --format='{{.State.Health.Status}}' networking-shop | grep -q healthy || \
+              wget -qO- http://localhost:3006/health | grep -q OK
+
+            # Clean up old images
+            docker image prune -f
+
+            echo "Deployment successful"
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            curl -sf http://localhost:3006/health | grep OK
+            echo "Site is live on port 3006"
