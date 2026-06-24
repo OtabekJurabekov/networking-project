@@ -1,0 +1,21 @@
+services:
+  shop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: networking-shop:latest
+    container_name: networking-shop
+    restart: unless-stopped
+    ports:
+      - "3006:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,15 @@
+services:
+  shop:
+    build: .
+    container_name: networking-shop-dev
+    ports:
+      - "3006:80"
+    volumes:
+      # Bind-mount for live editing during development
+      - ./website:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
