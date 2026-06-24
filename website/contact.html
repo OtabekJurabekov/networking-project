@@ -1,141 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact — TechAccessories</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Get in touch with the TechAccessories team — we're here to help."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <script>
-    tailwind.config = {
-      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
-    }
-  </script>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
 </head>
-<body class="font-sans bg-white text-gray-900">
+<body class="font-sans">
 
-  <!-- Navigation -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-        </svg>
-        <span class="text-xl font-bold text-gray-900">TechAccessories</span>
-      </a>
-      <div class="flex gap-6 items-center">
-        <a href="index.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Home</a>
-        <a href="products.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Products</a>
-        <a href="contact.html" class="nav-link active text-sm font-medium pb-0.5">Contact</a>
+  <!-- Animated background -->
+  <div class="bg-scene">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="relative z-10">
+
+    <!-- Navigation -->
+    <nav class="nav-glass sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <span class="font-bold text-white text-lg tracking-tight">TechAccessories</span>
+        </a>
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="contact.html" class="nav-link active">Contact</a>
+        </div>
+        <a href="products.html" class="btn-glow text-white text-sm font-semibold px-5 py-2 rounded-full">Shop Now</a>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Page Header -->
-  <section class="bg-gray-50 py-10 px-4 border-b border-gray-100">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-3xl font-bold">Contact Us</h1>
-      <p class="text-gray-500 mt-2">We'd love to hear from you — reach out any time</p>
-    </div>
-  </section>
+    <!-- Page Header -->
+    <section class="pt-28 pb-12 px-6">
+      <div class="max-w-6xl mx-auto fade-up">
+        <div class="glass inline-block px-4 py-1.5 rounded-full mb-4"><span class="badge badge-indigo">Get In Touch</span></div>
+        <h1 class="text-4xl font-black gradient-text-bright mb-3">Contact Us</h1>
+        <p class="text-slate-400">We'd love to hear from you — reach out any time</p>
+      </div>
+    </section>
 
-  <!-- Contact Content -->
-  <section class="py-12 px-4">
-    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+    <!-- Contact Content -->
+    <section class="pb-24 px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
 
-      <!-- Info -->
-      <div>
-        <h2 class="text-xl font-bold mb-6">Get In Touch</h2>
-        <div class="space-y-5">
-          <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-              </svg>
+        <!-- Info -->
+        <div class="fade-up">
+          <h2 class="text-xl font-bold text-white mb-6">Contact Information</h2>
+          <div class="space-y-4">
+            <div class="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-white">Address</p>
+                <p class="text-slate-500 text-sm mt-0.5">42 Market Street, City Centre<br/>London, EC1A 1BB</p>
+              </div>
             </div>
-            <div>
-              <p class="font-semibold">Address</p>
-              <p class="text-gray-500 text-sm">42 Market Street, City Centre<br/>London, EC1A 1BB</p>
+            <div class="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-white">Email</p>
+                <p class="text-slate-500 text-sm mt-0.5">support@techaccessories.store</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-              </svg>
-            </div>
-            <div>
-              <p class="font-semibold">Email</p>
-              <p class="text-gray-500 text-sm">support@techaccessories.store</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <div>
-              <p class="font-semibold">Business Hours</p>
-              <p class="text-gray-500 text-sm">Mon–Fri: 9 AM – 6 PM<br/>Sat: 10 AM – 4 PM</p>
+            <div class="glass glass-hover rounded-2xl p-5 flex items-start gap-4">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-white">Business Hours</p>
+                <p class="text-slate-500 text-sm mt-0.5">Mon–Fri: 9 AM – 6 PM<br/>Sat: 10 AM – 4 PM</p>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Form -->
+        <div class="fade-up delay-100">
+          <h2 class="text-xl font-bold text-white mb-6">Send a Message</h2>
+          <div class="glass rounded-3xl p-8">
+            <form class="space-y-5" onsubmit="handleSubmit(event)">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Name</label>
+                <input type="text" required placeholder="Your full name" class="input-glass"/>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Email</label>
+                <input type="email" required placeholder="your@email.com" class="input-glass"/>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Message</label>
+                <textarea required placeholder="How can we help you?" class="input-glass"></textarea>
+              </div>
+              <button type="submit" class="btn-glow text-white font-semibold w-full rounded-2xl py-3.5 text-sm">
+                Send Message
+              </button>
+              <p id="form-success" class="hidden text-emerald-400 text-sm text-center font-medium">
+                ✓ Message sent! We'll get back to you within 24 hours.
+              </p>
+            </form>
+          </div>
+          <script>
+            function handleSubmit(e) {
+              e.preventDefault();
+              document.getElementById('form-success').classList.remove('hidden');
+              e.target.reset();
+            }
+          </script>
+        </div>
+
       </div>
+    </section>
 
-      <!-- Form -->
-      <div>
-        <h2 class="text-xl font-bold mb-6">Send a Message</h2>
-        <form class="space-y-4" onsubmit="handleSubmit(event)">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input type="text" required placeholder="Your full name"
-                   class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+    <!-- Footer -->
+    <footer class="py-12 px-6 mt-20">
+      <div class="shimmer mb-10 max-w-6xl mx-auto"></div>
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" required placeholder="your@email.com"
-                   class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-            <textarea rows="4" required placeholder="How can we help you?"
-                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"></textarea>
-          </div>
-          <button type="submit"
-                  class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200">
-            Send Message
-          </button>
-          <p id="form-success" class="hidden text-green-600 text-sm text-center font-medium">
-            ✓ Message sent! We'll get back to you within 24 hours.
-          </p>
-        </form>
-        <script>
-          function handleSubmit(e) {
-            e.preventDefault();
-            document.getElementById('form-success').classList.remove('hidden');
-            e.target.reset();
-          }
-        </script>
+          <span class="font-bold text-white text-sm">TechAccessories</span>
+        </div>
+        <nav class="flex gap-8">
+          <a href="index.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Home</a>
+          <a href="products.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Products</a>
+          <a href="contact.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Contact</a>
+        </nav>
+        <p class="text-slate-600 text-xs">© 2026 TechAccessories. All rights reserved.</p>
       </div>
+    </footer>
 
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-8 px-4">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="font-semibold text-white">TechAccessories</span>
-      <nav class="flex gap-6 text-sm">
-        <a href="index.html" class="hover:text-white transition-colors">Home</a>
-        <a href="products.html" class="hover:text-white transition-colors">Products</a>
-        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
-      </nav>
-      <span class="text-xs">© 2026 TechAccessories. All rights reserved.</span>
-    </div>
-  </footer>
+  </div>
 
 </body>
 </html>

@@ -1,174 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TechAccessories — Premium Phone Accessories</title>
-  <meta name="description" content="Shop premium cables, charging blocks, headphones and more at TechAccessories." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Shop premium cables, charging blocks, headphones and more."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <script>
-    tailwind.config = {
-      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
-    }
-  </script>
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
 </head>
-<body class="font-sans bg-white text-gray-900">
+<body class="font-sans">
 
-  <!-- Navigation -->
-  <nav class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
-        </svg>
-        <span class="text-xl font-bold text-gray-900">TechAccessories</span>
-      </a>
-      <div class="flex gap-6 items-center">
-        <a href="index.html" class="nav-link active text-sm font-medium pb-0.5">Home</a>
-        <a href="products.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Products</a>
-        <a href="contact.html" class="nav-link text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">Contact</a>
-      </div>
-    </div>
-  </nav>
+  <!-- Animated background -->
+  <div class="bg-scene">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
 
-  <!-- Hero -->
-  <section class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20 px-4">
-    <div class="max-w-4xl mx-auto text-center fade-in">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4 leading-tight">
-        Power Up Your Devices
-      </h1>
-      <p class="text-lg sm:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-        Premium cables, fast chargers, and quality accessories for every device — delivered fast, built to last.
-      </p>
-      <a href="products.html"
-         class="inline-block bg-white text-blue-700 font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl hover:bg-blue-50 transition-all duration-200">
-        Shop Now
-      </a>
-    </div>
-  </section>
+  <div class="relative z-10">
 
-  <!-- Featured Products -->
-  <section class="py-16 px-4 bg-gray-50">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-2xl font-bold text-center mb-2">Featured Products</h2>
-      <p class="text-gray-500 text-center mb-10">Our best-selling accessories</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <!-- Card 1 -->
-        <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=250&fit=crop"
-               alt="USB-C Cable" class="w-full h-48 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-gray-900">USB-C Braided Cable</h3>
-            <p class="text-gray-500 text-sm mt-1">Fast charging, 2m length</p>
-            <div class="flex items-center justify-between mt-3">
-              <span class="text-blue-600 font-bold text-lg">$12.99</span>
-              <a href="products.html" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full hover:bg-blue-700 transition-colors">View</a>
-            </div>
+    <!-- Navigation -->
+    <nav class="nav-glass sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=250&fit=crop"
-               alt="Charging Block" class="w-full h-48 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-gray-900">65W GaN Charger</h3>
-            <p class="text-gray-500 text-sm mt-1">3-port, supports all devices</p>
-            <div class="flex items-center justify-between mt-3">
-              <span class="text-blue-600 font-bold text-lg">$34.99</span>
-              <a href="products.html" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full hover:bg-blue-700 transition-colors">View</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop"
-               alt="Headphones" class="w-full h-48 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-gray-900">Wireless Headphones</h3>
-            <p class="text-gray-500 text-sm mt-1">40hr battery, ANC</p>
-            <div class="flex items-center justify-between mt-3">
-              <span class="text-blue-600 font-bold text-lg">$79.99</span>
-              <a href="products.html" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full hover:bg-blue-700 transition-colors">View</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="product-card bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          <img src="https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=400&h=250&fit=crop"
-               alt="Power Bank" class="w-full h-48 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-gray-900">20000mAh Power Bank</h3>
-            <p class="text-gray-500 text-sm mt-1">22.5W fast charge</p>
-            <div class="flex items-center justify-between mt-3">
-              <span class="text-blue-600 font-bold text-lg">$44.99</span>
-              <a href="products.html" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-full hover:bg-blue-700 transition-colors">View</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="text-center mt-10">
-        <a href="products.html" class="inline-block border-2 border-blue-600 text-blue-600 font-semibold px-8 py-3 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200">
-          View All Products
+          <span class="font-bold text-white text-lg tracking-tight">TechAccessories</span>
         </a>
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+        <a href="products.html" class="btn-glow text-white text-sm font-semibold px-5 py-2 rounded-full">Shop Now</a>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- Why Us -->
-  <section class="py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-2xl font-bold mb-10">Why Choose TechAccessories?</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center pt-16 px-6">
+      <div class="max-w-6xl mx-auto w-full">
+        <div class="max-w-3xl fade-up">
+          <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+            <span class="text-xs font-medium text-slate-300">Free shipping on orders over $50</span>
           </div>
-          <h3 class="font-semibold">Certified Quality</h3>
-          <p class="text-gray-500 text-sm">All products pass strict quality checks before reaching you.</p>
+          <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-8">
+            <span class="gradient-text-bright">Power Up</span><br/>
+            <span class="text-slate-400 font-light text-5xl sm:text-6xl lg:text-7xl">Your Devices</span>
+          </h1>
+          <p class="text-lg text-slate-400 max-w-xl leading-relaxed mb-10 fade-up delay-100">
+            Premium cables, fast chargers, and quality accessories built for everyday life. Engineered to last, designed to impress.
+          </p>
+          <div class="flex flex-wrap gap-4 fade-up delay-200">
+            <a href="products.html" class="btn-glow text-white font-semibold px-8 py-3.5 rounded-full text-sm inline-flex items-center gap-2">
+              Browse Products
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="contact.html" class="btn-ghost font-semibold px-8 py-3.5 rounded-full text-sm inline-flex items-center gap-2">
+              Contact Us
+            </a>
+          </div>
         </div>
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
+        <div class="grid grid-cols-3 gap-4 mt-20 max-w-lg fade-up delay-300">
+          <div class="glass rounded-2xl p-4 text-center">
+            <div class="text-2xl font-bold gradient-text">500+</div>
+            <div class="text-xs text-slate-500 mt-1">Products</div>
           </div>
-          <h3 class="font-semibold">Fast Delivery</h3>
-          <p class="text-gray-500 text-sm">Same-day dispatch on orders placed before 2 PM.</p>
-        </div>
-        <div class="flex flex-col items-center gap-3">
-          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21L8.5 10.5s1 2 3 4 4 3 4 3l1.116-1.724a1 1 0 011.21-.502l4.493 1.498A1 1 0 0123 17.72V21a2 2 0 01-2 2h-1C9.716 23 1 14.284 1 4V3a2 2 0 012-2z"/>
-            </svg>
+          <div class="glass rounded-2xl p-4 text-center">
+            <div class="text-2xl font-bold gradient-text">50K+</div>
+            <div class="text-xs text-slate-500 mt-1">Customers</div>
           </div>
-          <h3 class="font-semibold">24/7 Support</h3>
-          <p class="text-gray-500 text-sm">Our team is always here to answer your questions.</p>
+          <div class="glass rounded-2xl p-4 text-center">
+            <div class="text-2xl font-bold gradient-text">4.9★</div>
+            <div class="text-xs text-slate-500 mt-1">Rating</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-8 px-4">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="font-semibold text-white">TechAccessories</span>
-      <nav class="flex gap-6 text-sm">
-        <a href="index.html" class="hover:text-white transition-colors">Home</a>
-        <a href="products.html" class="hover:text-white transition-colors">Products</a>
-        <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
-      </nav>
-      <span class="text-xs">© 2026 TechAccessories. All rights reserved.</span>
-    </div>
-  </footer>
+    <!-- Featured Products -->
+    <section class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14 fade-up">
+          <div class="glass inline-block px-4 py-1.5 rounded-full mb-4"><span class="badge badge-indigo">Best Sellers</span></div>
+          <h2 class="text-4xl font-black gradient-text-bright mb-3">Featured Products</h2>
+          <p class="text-slate-400">Our most-loved accessories, handpicked for you</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Card 1 -->
+          <div class="product-card group fade-up">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=250&fit=crop" alt="USB-C Braided Cable" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+              <div class="img-overlay"></div>
+            </div>
+            <div class="p-5">
+              <span class="badge badge-indigo mb-3">Cables</span>
+              <h3 class="font-semibold text-white mb-1">USB-C Braided Cable</h3>
+              <p class="text-slate-500 text-sm mb-4">Fast charging, 2m length</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-bold gradient-text">$12.99</span>
+                <a href="products.html" class="btn-glow text-white text-xs font-semibold px-4 py-2 rounded-full">View</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="product-card group fade-up delay-100">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=250&fit=crop" alt="65W GaN Charger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+              <div class="img-overlay"></div>
+            </div>
+            <div class="p-5">
+              <span class="badge badge-cyan mb-3">Chargers</span>
+              <h3 class="font-semibold text-white mb-1">65W GaN Charger</h3>
+              <p class="text-slate-500 text-sm mb-4">3-port, supports all devices</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-bold gradient-text">$34.99</span>
+                <a href="products.html" class="btn-glow text-white text-xs font-semibold px-4 py-2 rounded-full">View</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="product-card group fade-up delay-200">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=250&fit=crop" alt="Wireless Headphones" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+              <div class="img-overlay"></div>
+            </div>
+            <div class="p-5">
+              <span class="badge badge-violet mb-3">Audio</span>
+              <h3 class="font-semibold text-white mb-1">Wireless Headphones</h3>
+              <p class="text-slate-500 text-sm mb-4">40hr battery, ANC</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-bold gradient-text">$79.99</span>
+                <a href="products.html" class="btn-glow text-white text-xs font-semibold px-4 py-2 rounded-full">View</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="product-card group fade-up delay-300">
+            <div class="relative h-48 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1585298723682-7115561c51b7?w=400&h=250&fit=crop" alt="20000mAh Power Bank" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+              <div class="img-overlay"></div>
+            </div>
+            <div class="p-5">
+              <span class="badge badge-cyan mb-3">Chargers</span>
+              <h3 class="font-semibold text-white mb-1">20000mAh Power Bank</h3>
+              <p class="text-slate-500 text-sm mb-4">22.5W fast charge</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xl font-bold gradient-text">$44.99</span>
+                <a href="products.html" class="btn-glow text-white text-xs font-semibold px-4 py-2 rounded-full">View</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="text-center mt-14">
+          <a href="products.html" class="btn-ghost font-semibold px-8 py-3.5 rounded-full text-sm inline-flex items-center gap-2">
+            View All Products
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Us -->
+    <section class="py-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14 fade-up">
+          <div class="glass inline-block px-4 py-1.5 rounded-full mb-4"><span class="badge badge-violet">Why Us</span></div>
+          <h2 class="text-4xl font-black gradient-text-bright mb-3">Why Choose TechAccessories?</h2>
+          <p class="text-slate-400">Quality, speed, and support you can count on</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="glass glass-hover rounded-3xl p-8 text-center">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-bold text-white mb-2">Certified Quality</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">All products pass strict quality checks before reaching you.</p>
+          </div>
+          <div class="glass glass-hover rounded-3xl p-8 text-center">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <h3 class="font-bold text-white mb-2">Fast Delivery</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">Same-day dispatch on orders placed before 2 PM.</p>
+          </div>
+          <div class="glass glass-hover rounded-3xl p-8 text-center">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/20 flex items-center justify-center">
+              <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m-12.728 0a9 9 0 010-12.728m9.9 9.9a5 5 0 010-7.072m-7.072 0a5 5 0 010 7.072M13 12a1 1 0 11-2 0 1 1 0 012 0z"/></svg>
+            </div>
+            <h3 class="font-bold text-white mb-2">24/7 Support</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">Our team is always here to answer your questions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 mt-20">
+      <div class="shimmer mb-10 max-w-6xl mx-auto"></div>
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <span class="font-bold text-white text-sm">TechAccessories</span>
+        </div>
+        <nav class="flex gap-8">
+          <a href="index.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Home</a>
+          <a href="products.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Products</a>
+          <a href="contact.html" class="text-slate-500 hover:text-slate-300 transition-colors text-sm">Contact</a>
+        </nav>
+        <p class="text-slate-600 text-xs">© 2026 TechAccessories. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
 
 </body>
 </html>
