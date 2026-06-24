@@ -1,14 +1,17 @@
 name: Deploy to Production
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     branches: [main]
 
 jobs:
   deploy:
     name: Deploy to Contabo VPS
     runs-on: ubuntu-latest
-    needs: [build-and-test]
+    # Only deploy when CI passes
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Deploy via SSH
@@ -21,23 +24,15 @@ jobs:
           script: |
             set -e
 
-            # Navigate to project directory
             cd /opt/networking-project
-
-            # Pull latest code
             git pull origin main
-
-            # Build and restart container (no downtime for static sites — build first, then swap)
             docker compose -f docker-compose.prod.yml up -d --build --remove-orphans
 
-            # Wait for health check to pass
             sleep 5
             docker inspect --format='{{.State.Health.Status}}' networking-shop | grep -q healthy || \
               wget -qO- http://localhost:3006/health | grep -q OK
 
-            # Clean up old images
             docker image prune -f
-
             echo "Deployment successful"
 
       - name: Verify deployment
