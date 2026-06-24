@@ -8,8 +8,7 @@ jobs:
   deploy:
     name: Deploy to Contabo VPS
     runs-on: ubuntu-latest
-    # Only run after CI passes
-    needs: []
+    needs: [build-and-test]
 
     steps:
       - name: Deploy via SSH
