@@ -1,23 +1,20 @@
-# Build stage: copy static assets (kept here for future build step extensibility)
-FROM nginx:alpine AS production
+FROM node:20-alpine
 
-# Remove default nginx config
-RUN rm /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-# Copy our custom nginx config
-COPY website/nginx.conf /etc/nginx/conf.d/default.conf
+# Install dependencies first (cached layer)
+COPY app/package*.json ./
+RUN npm ci --only=production
 
-# Copy static website files
-COPY website/ /usr/share/nginx/html/
+# Copy app source
+COPY app/ .
 
-# Remove the nginx.conf from the web root (it's not a web asset)
-RUN rm /usr/share/nginx/html/nginx.conf
+# Upload directory (overridden by volume in production)
+RUN mkdir -p /app/uploads
 
-# Nginx listens on 80
-EXPOSE 80
+EXPOSE 3000
 
-# Healthcheck using wget (available in alpine)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD wget -qO- http://localhost/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+  CMD wget -qO- http://localhost:3000/health || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]

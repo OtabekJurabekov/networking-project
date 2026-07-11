@@ -1,15 +1,14 @@
 services:
-  shop:
+  filedrop:
     build: .
-    container_name: networking-shop-dev
+    container_name: filedrop-dev
     ports:
-      - "3006:80"
+      - "3006:3000"
     volumes:
-      # Bind-mount for live editing during development
-      - ./website:/usr/share/nginx/html:ro
+      - ./uploads-dev:/app/uploads
+    environment:
+      - NODE_ENV=development
+      - AUTH_EMAIL=otabekjurabekov3@gmail.com
+      - AUTH_PASSWORD_HASH=${AUTH_PASSWORD_HASH}
+      - SESSION_SECRET=dev-secret-change-in-prod
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3

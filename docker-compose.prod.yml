@@ -1,21 +1,19 @@
 services:
-  shop:
+  filedrop:
     build:
       context: .
       dockerfile: Dockerfile
-    image: networking-shop:latest
     container_name: networking-shop
     restart: unless-stopped
     ports:
-      - "3006:80"
+      - "3006:3000"
+    volumes:
+      - /opt/networking-project/uploads:/app/uploads
+    env_file:
+      - .env
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/health"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 30s
       timeout: 10s
       start_period: 15s
       retries: 3
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"

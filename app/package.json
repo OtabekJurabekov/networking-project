@@ -1,0 +1,17 @@
+{
+  "name": "filedrop",
+  "version": "1.0.0",
+  "description": "Personal file transfer server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "busboy": "^1.6.0",
+    "connect-session-sequelize": "^7.1.7",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "fs-extra": "^11.2.0"
+  }
+}

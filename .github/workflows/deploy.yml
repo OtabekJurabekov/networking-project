@@ -10,7 +10,6 @@ jobs:
   deploy:
     name: Deploy to Contabo VPS
     runs-on: ubuntu-latest
-    # Only deploy when CI passes
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
@@ -23,16 +22,12 @@ jobs:
           port: 22
           script: |
             set -e
-
             cd /opt/networking-project
             git pull origin main
             docker compose -f docker-compose.prod.yml build --no-cache
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
-
-            sleep 5
-            docker inspect --format='{{.State.Health.Status}}' networking-shop | grep -q healthy || \
-              wget -qO- http://localhost:3006/health | grep -q OK
-
+            sleep 8
+            wget -qO- http://localhost:3006/health | grep -q OK
             docker image prune -f
             echo "Deployment successful"
 
@@ -43,5 +38,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            curl -sf http://localhost:3006/health | grep OK
-            echo "Site is live on port 3006"
+            wget -qO- http://localhost:3006/health | grep OK
+            echo "FileDrop is live on port 3006"
