@@ -141,12 +141,13 @@ app.post('/api/chunk', requireAuth, (req, res) => {
 
       await assembleChunks(chunkDir, dest, count);
 
-      const size = fs.statSync(dest).size;
-      fs.writeFileSync(dest + '.meta', JSON.stringify({ originalname: name, uploaded: new Date().toISOString(), size }));
+      const size   = fs.statSync(dest).size;
+      const sha256 = await hashFile(dest);
+      fs.writeFileSync(dest + '.meta', JSON.stringify({ originalname: name, uploaded: new Date().toISOString(), size, sha256 }));
       fs.rmSync(chunkDir, { recursive: true, force: true });
 
-      console.log(`Assembled ${stored} (${(size / 1e9).toFixed(2)} GB)`);
-      res.json({ done: true, id: stored });
+      console.log(`Assembled ${stored} | ${(size / 1e9).toFixed(2)} GB | sha256: ${sha256}`);
+      res.json({ done: true, id: stored, sha256, size });
 
     } catch (e) {
       console.error('Assembly error:', e);
@@ -154,6 +155,16 @@ app.post('/api/chunk', requireAuth, (req, res) => {
     }
   });
 });
+
+function hashFile(filePath) {
+  return new Promise((resolve, reject) => {
+    const hash   = crypto.createHash('sha256');
+    const stream = fs.createReadStream(filePath);
+    stream.on('data', chunk => hash.update(chunk));
+    stream.on('end',  ()    => resolve(hash.digest('hex')));
+    stream.on('error', reject);
+  });
+}
 
 function assembleChunks(chunkDir, dest, totalChunks) {
   return new Promise((resolve, reject) => {

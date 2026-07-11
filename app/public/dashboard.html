@@ -299,6 +299,7 @@
       const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
       const uploadId    = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
       activeUploadId    = uploadId;
+      let lastResp      = null;
 
       pw.style.display = 'block';
       pnm.textContent  = file.name;
@@ -314,7 +315,7 @@
           const blob  = file.slice(start, Math.min(start + CHUNK_SIZE, file.size));
 
           // Upload this chunk with per-chunk XHR progress
-          await uploadChunk(blob, uploadId, i, totalChunks, file.name, (loaded, total) => {
+          lastResp = await uploadChunk(blob, uploadId, i, totalChunks, file.name, (loaded, total) => {
             const basePercent  = (i / totalChunks) * 100;
             const chunkPercent = (loaded / total) * (100 / totalChunks);
             const overall      = Math.min(99, basePercent + chunkPercent);
@@ -326,12 +327,22 @@
           });
         }
 
-        // All chunks sent — server has already assembled
+        // Last chunk response contains the final assembled file info
+        // (the server returns { done, id, sha256, size } on the last chunk)
         pbar.style.width = '100%';
         ppct.textContent = '100%';
-        pst.textContent  = 'Assembling file on server...';
+
+        // Grab sha256 from the last chunk's server response (stored in lastResp)
+        const sha = lastResp && lastResp.sha256 ? lastResp.sha256 : null;
+        if (sha) {
+          pst.innerHTML = `✓ Assembled &amp; verified<br>
+            <span style="font-size:.75rem;color:#64748b;word-break:break-all">SHA-256: <b style="color:#a5b4fc">${sha}</b></span><br>
+            <span style="font-size:.72rem;color:#475569">Verify locally: <code>sha256sum "${file.name}"</code></span>`;
+        } else {
+          pst.textContent = '✓ Upload complete';
+        }
         toast(`"${file.name}" uploaded ✓`);
-        setTimeout(() => { pw.style.display = 'none'; activeUploadId = null; loadFiles(); }, 1200);
+        setTimeout(() => { pw.style.display = 'none'; activeUploadId = null; loadFiles(); }, 6000);
 
       } catch (e) {
         if (e.message === 'cancelled') return;
