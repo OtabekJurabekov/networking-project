@@ -285,57 +285,91 @@
       } catch(_) { toast('Network error', 'error'); }
     }
 
-    // ── Upload ───────────────────────────────────────────────────────────────
-    function uploadFile(file) {
+    // ── Chunked upload ────────────────────────────────────────────────────────
+    const CHUNK_SIZE = 48 * 1024 * 1024; // 48 MB per chunk
+    let activeUploadId = null;
+
+    async function uploadFile(file) {
       const pw   = document.getElementById('progress-wrap');
       const pbar = document.getElementById('prog-bar');
       const ppct = document.getElementById('prog-pct');
       const pnm  = document.getElementById('prog-name');
       const pst  = document.getElementById('prog-status');
 
+      const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+      const uploadId    = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+      activeUploadId    = uploadId;
+
       pw.style.display = 'block';
       pnm.textContent  = file.name;
       pbar.style.width = '0%';
       ppct.textContent = '0%';
-      pst.textContent  = 'Connecting...';
+      pst.textContent  = totalChunks === 1 ? 'Uploading...' : `Preparing ${totalChunks} chunks...`;
 
-      const fd  = new FormData();
-      fd.append('file', file);
-      const xhr = new XMLHttpRequest();
+      try {
+        for (let i = 0; i < totalChunks; i++) {
+          if (activeUploadId !== uploadId) throw new Error('cancelled');
 
-      xhr.upload.onprogress = e => {
-        if (!e.lengthComputable) return;
-        const pct = Math.round(e.loaded / e.total * 100);
-        pbar.style.width = pct + '%';
-        ppct.textContent = pct + '%';
-        pst.textContent  = `${fmtBytes(e.loaded)} / ${fmtBytes(e.total)} uploaded`;
-      };
+          const start = i * CHUNK_SIZE;
+          const blob  = file.slice(start, Math.min(start + CHUNK_SIZE, file.size));
 
-      xhr.onload = () => {
-        if (xhr.status === 401) { location.href = '/'; return; }
-        if (xhr.status === 200) {
-          try {
-            const resp = JSON.parse(xhr.responseText);
-            if (!resp.success) throw new Error(resp.error || 'Server error');
-          } catch(e) { pst.textContent = 'Error: ' + e.message; toast('Upload failed', 'error'); return; }
-          pbar.style.width  = '100%';
-          ppct.textContent  = '100%';
-          pst.textContent   = 'Upload complete!';
-          toast(`"${file.name}" uploaded successfully ✓`);
-          setTimeout(() => { pw.style.display = 'none'; loadFiles(); }, 1500);
-        } else {
-          let msg = 'Server error ' + xhr.status;
-          try { msg = JSON.parse(xhr.responseText).error || msg; } catch(_) {}
-          pst.textContent = 'Upload failed: ' + msg;
-          toast('Upload failed: ' + msg, 'error');
+          // Upload this chunk with per-chunk XHR progress
+          await uploadChunk(blob, uploadId, i, totalChunks, file.name, (loaded, total) => {
+            const basePercent  = (i / totalChunks) * 100;
+            const chunkPercent = (loaded / total) * (100 / totalChunks);
+            const overall      = Math.min(99, basePercent + chunkPercent);
+            pbar.style.width   = overall.toFixed(1) + '%';
+            ppct.textContent   = overall.toFixed(0) + '%';
+            const sent = i * CHUNK_SIZE + loaded;
+            pst.textContent = `${fmtBytes(sent)} / ${fmtBytes(file.size)}`
+              + (totalChunks > 1 ? `  (part ${i+1}/${totalChunks})` : '');
+          });
         }
-      };
-      xhr.onerror = () => { pst.textContent = 'Network error during upload'; toast('Network error', 'error'); };
-      xhr.ontimeout = () => { pst.textContent = 'Upload timed out'; toast('Timed out', 'error'); };
-      xhr.timeout = 6 * 60 * 60 * 1000; // 6 hours
 
-      xhr.open('POST', '/api/upload');
-      xhr.send(fd);
+        // All chunks sent — server has already assembled
+        pbar.style.width = '100%';
+        ppct.textContent = '100%';
+        pst.textContent  = 'Assembling file on server...';
+        toast(`"${file.name}" uploaded ✓`);
+        setTimeout(() => { pw.style.display = 'none'; activeUploadId = null; loadFiles(); }, 1200);
+
+      } catch (e) {
+        if (e.message === 'cancelled') return;
+        console.error('Upload error:', e);
+        pst.textContent = '✗ ' + e.message;
+        toast(e.message, 'error');
+        // Tell server to clean up temp chunks
+        if (activeUploadId) fetch('/api/chunk/' + uploadId, { method: 'DELETE' }).catch(() => {});
+        activeUploadId = null;
+      }
+    }
+
+    function uploadChunk(blob, uploadId, index, total, name, onProgress) {
+      return new Promise((resolve, reject) => {
+        const xhr    = new XMLHttpRequest();
+        const params = new URLSearchParams({ uploadId, index, total, name });
+
+        xhr.upload.onprogress = e => { if (e.lengthComputable) onProgress(e.loaded, e.total); };
+
+        xhr.onload = () => {
+          if (xhr.status === 401) { location.href = '/'; return reject(new Error('Session expired')); }
+          if (xhr.status === 200) {
+            try { resolve(JSON.parse(xhr.responseText)); }
+            catch(_) { reject(new Error('Bad response from server')); }
+          } else {
+            let msg = 'HTTP ' + xhr.status;
+            try { msg = JSON.parse(xhr.responseText).error || msg; } catch(_) {}
+            reject(new Error(msg));
+          }
+        };
+        xhr.onerror   = () => reject(new Error('Network error — check your connection'));
+        xhr.ontimeout = () => reject(new Error('Chunk timed out — try a smaller file or faster connection'));
+        xhr.timeout   = 10 * 60 * 1000; // 10 min per 48 MB chunk
+
+        xhr.open('POST', '/api/chunk?' + params);
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+        xhr.send(blob);
+      });
     }
 
     // ── File input ───────────────────────────────────────────────────────────
