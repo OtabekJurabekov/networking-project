@@ -113,8 +113,11 @@ app.post('/api/upload', requireAuth, (req, res) => {
     limits: { fileSize: 15 * 1024 * 1024 * 1024 } // 15 GB hard cap
   });
 
-  let saved = false;
-  let error = null;
+  // Track the write-to-disk promise so we can await it before responding.
+  // Busboy's 'finish' fires when parsing is done, but the disk writer may
+  // still be flushing — we must wait for 'finish' on the writer itself.
+  let writePromise = null;
+  let uploadError  = null;
 
   bb.on('file', (fieldname, fileStream, info) => {
     const { filename } = info;
@@ -127,7 +130,7 @@ app.post('/api/upload', requireAuth, (req, res) => {
     const writer = fs.createWriteStream(dest);
 
     fileStream.on('limit', () => {
-      error = 'File exceeds 15 GB limit';
+      uploadError = 'File exceeds 15 GB limit';
       fileStream.resume();
       writer.destroy();
       try { fs.unlinkSync(dest); } catch (_) {}
@@ -135,26 +138,38 @@ app.post('/api/upload', requireAuth, (req, res) => {
 
     fileStream.pipe(writer);
 
-    writer.on('close', () => {
-      if (!error) {
-        meta.size = fs.statSync(dest).size;
-        fs.writeFileSync(dest + '.meta', JSON.stringify(meta));
-        saved = stored;
-      }
-    });
-
-    writer.on('error', err => {
-      error = err.message;
-      try { fs.unlinkSync(dest); } catch (_) {}
+    // Wrap the disk write in a promise so we can await completion
+    writePromise = new Promise((resolve, reject) => {
+      writer.on('finish', () => {
+        if (uploadError) return resolve(null);
+        try {
+          meta.size = fs.statSync(dest).size;
+          fs.writeFileSync(dest + '.meta', JSON.stringify(meta));
+        } catch (e) { return reject(e); }
+        resolve(stored);
+      });
+      writer.on('error', err => {
+        try { fs.unlinkSync(dest); } catch (_) {}
+        reject(err);
+      });
     });
   });
 
-  bb.on('error', err => { error = err.message; });
+  bb.on('error', err => { uploadError = err.message; });
 
-  bb.on('close', () => {
-    if (error)  return res.status(500).json({ error });
-    if (!saved) return res.status(400).json({ error: 'No file received' });
-    res.json({ success: true, id: saved });
+  // Use 'finish' (not 'close') — fires when busboy has finished parsing.
+  // Then await the disk write promise before sending the response.
+  bb.on('finish', async () => {
+    if (uploadError) return res.status(500).json({ error: uploadError });
+    if (!writePromise) return res.status(400).json({ error: 'No file received' });
+    try {
+      const saved = await writePromise;
+      if (!saved) return res.status(500).json({ error: uploadError || 'Write failed' });
+      res.json({ success: true, id: saved });
+    } catch (err) {
+      console.error('Upload write error:', err);
+      res.status(500).json({ error: err.message });
+    }
   });
 
   req.pipe(bb);
