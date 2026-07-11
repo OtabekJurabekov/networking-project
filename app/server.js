@@ -1,12 +1,13 @@
 'use strict';
 
-const express = require('express');
-const session = require('express-session');
-const bcrypt  = require('bcrypt');
-const busboy  = require('busboy');
-const path    = require('path');
-const fs      = require('fs');
-const crypto  = require('crypto');
+const express      = require('express');
+const session      = require('express-session');
+const FileStore    = require('session-file-store')(session);
+const bcrypt       = require('bcrypt');
+const busboy       = require('busboy');
+const path         = require('path');
+const fs           = require('fs');
+const crypto       = require('crypto');
 
 const app = express();
 
@@ -26,7 +27,11 @@ fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const SESSION_DIR = path.join(UPLOAD_DIR, '..', 'sessions');
+fs.mkdirSync(SESSION_DIR, { recursive: true });
+
 app.use(session({
+  store: new FileStore({ path: SESSION_DIR, ttl: 7 * 24 * 3600, retries: 0, logFn: () => {} }),
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -39,8 +44,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ── Auth middleware ───────────────────────────────────────────────────────────
 function requireAuth(req, res, next) {
   if (req.session && req.session.authenticated) return next();
-  if (req.headers['accept'] && req.headers['accept'].includes('application/json')) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  // API routes always get JSON so the frontend can handle it gracefully
+  if (req.path.startsWith('/api/')) {
+    return res.status(401).json({ error: 'Session expired. Please log in again.' });
   }
   res.redirect('/?error=session');
 }

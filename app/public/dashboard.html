@@ -229,21 +229,28 @@
       setTimeout(() => el.classList.remove('show'), 3500);
     }
 
+    // ── Authenticated fetch — redirects to login on 401 ─────────────────────
+    async function apiFetch(url, opts = {}) {
+      const r = await fetch(url, opts);
+      if (r.status === 401) { location.href = '/'; throw new Error('session'); }
+      return r;
+    }
+
     // ── Stats ────────────────────────────────────────────────────────────────
     async function loadStats() {
       try {
-        const r = await fetch('/api/stats');
+        const r = await apiFetch('/api/stats');
         const d = await r.json();
         document.getElementById('stats-badge').innerHTML =
           `<span>${d.count}</span> files · <span>${fmtBytes(d.totalBytes)}</span> used`;
-      } catch(_) {}
+      } catch(e) { if (e.message !== 'session') document.getElementById('stats-badge').textContent = 'Error'; }
     }
 
     // ── File list ────────────────────────────────────────────────────────────
     async function loadFiles() {
       const list = document.getElementById('file-list');
       try {
-        const r = await fetch('/api/files');
+        const r = await apiFetch('/api/files');
         const files = await r.json();
         if (!files.length) {
           list.innerHTML = '<div class="empty"><span class="empty-icon">📂</span><div class="empty-text">No files yet — upload something!</div></div>';
@@ -262,7 +269,8 @@
             </div>
           </div>`).join('');
       } catch(e) {
-        list.innerHTML = '<div class="empty"><span class="empty-icon">⚠️</span><div class="empty-text">Failed to load files.</div></div>';
+        if (e.message !== 'session')
+          list.innerHTML = '<div class="empty"><span class="empty-icon">⚠️</span><div class="empty-text">Failed to load files.</div></div>';
       }
       loadStats();
     }
@@ -304,15 +312,22 @@
       };
 
       xhr.onload = () => {
+        if (xhr.status === 401) { location.href = '/'; return; }
         if (xhr.status === 200) {
+          try {
+            const resp = JSON.parse(xhr.responseText);
+            if (!resp.success) throw new Error(resp.error || 'Server error');
+          } catch(e) { pst.textContent = 'Error: ' + e.message; toast('Upload failed', 'error'); return; }
           pbar.style.width  = '100%';
           ppct.textContent  = '100%';
           pst.textContent   = 'Upload complete!';
           toast(`"${file.name}" uploaded successfully ✓`);
           setTimeout(() => { pw.style.display = 'none'; loadFiles(); }, 1500);
         } else {
-          pst.textContent = 'Upload failed: ' + (JSON.parse(xhr.responseText).error || 'Unknown error');
-          toast('Upload failed', 'error');
+          let msg = 'Server error ' + xhr.status;
+          try { msg = JSON.parse(xhr.responseText).error || msg; } catch(_) {}
+          pst.textContent = 'Upload failed: ' + msg;
+          toast('Upload failed: ' + msg, 'error');
         }
       };
       xhr.onerror = () => { pst.textContent = 'Network error during upload'; toast('Network error', 'error'); };
