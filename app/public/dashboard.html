@@ -254,6 +254,7 @@
         const files = await r.json();
         if (!files.length) {
           list.innerHTML = '<div class="empty"><span class="empty-icon">📂</span><div class="empty-text">No files yet — upload something!</div></div>';
+          loadStats();
           return;
         }
         list.innerHTML = files.map(f => `
@@ -315,7 +316,7 @@
           const blob  = file.slice(start, Math.min(start + CHUNK_SIZE, file.size));
 
           // Upload this chunk with per-chunk XHR progress
-          lastResp = await uploadChunk(blob, uploadId, i, totalChunks, file.name, (loaded, total) => {
+          lastResp = await uploadChunkWithRetry(blob, uploadId, i, totalChunks, file.name, (loaded, total) => {
             const basePercent  = (i / totalChunks) * 100;
             const chunkPercent = (loaded / total) * (100 / totalChunks);
             const overall      = Math.min(99, basePercent + chunkPercent);
@@ -352,6 +353,22 @@
         // Tell server to clean up temp chunks
         if (activeUploadId) fetch('/api/chunk/' + uploadId, { method: 'DELETE' }).catch(() => {});
         activeUploadId = null;
+      }
+    }
+
+    async function uploadChunkWithRetry(blob, uploadId, index, total, name, onProgress) {
+      const MAX_RETRIES = 4;
+      for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          return await uploadChunk(blob, uploadId, index, total, name, onProgress);
+        } catch (e) {
+          if (e.message === 'Session expired' || e.message === 'cancelled') throw e;
+          if (attempt === MAX_RETRIES) throw new Error(`Part ${index + 1} failed after ${MAX_RETRIES} attempts: ${e.message}`);
+          const wait = attempt * 2000;
+          document.getElementById('prog-status').textContent =
+            `Part ${index + 1} failed (${e.message}) — retrying in ${attempt * 2}s… (attempt ${attempt}/${MAX_RETRIES})`;
+          await new Promise(r => setTimeout(r, wait));
+        }
       }
     }
 
@@ -400,6 +417,7 @@
 
     // ── Init ─────────────────────────────────────────────────────────────────
     loadFiles();
+    loadStats();
   </script>
 </body>
 </html>
