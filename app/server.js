@@ -12,15 +12,14 @@ const app = express();
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const UPLOAD_DIR     = process.env.UPLOAD_DIR || '/app/uploads';
-const AUTH_EMAIL     = process.env.AUTH_EMAIL;
-const PASSWORD_HASH  = process.env.AUTH_PASSWORD_HASH;
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 const PORT           = process.env.PORT || 3000;
 
-if (!AUTH_EMAIL || !PASSWORD_HASH) {
-  console.error('FATAL: AUTH_EMAIL and AUTH_PASSWORD_HASH env vars must be set');
-  process.exit(1);
-}
+// Credentials — bcrypt hash is safe to store; cannot be reversed to plaintext.
+// Override via env vars for flexibility.
+const AUTH_EMAIL    = process.env.AUTH_EMAIL    || 'otabekjurabekov3@gmail.com';
+const PASSWORD_HASH = process.env.AUTH_PASSWORD_HASH
+  || '$2b$12$T2vc8dvlbNbfuwt1.4UN1OaZkGVuKKAvRFnkySdov7GtU3Q88fUIC';
 
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
