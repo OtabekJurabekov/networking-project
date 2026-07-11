@@ -13,7 +13,7 @@ const app = express();
 // ── Config ────────────────────────────────────────────────────────────────────
 const UPLOAD_DIR  = process.env.UPLOAD_DIR || '/app/uploads';
 const TMP_DIR     = path.join(UPLOAD_DIR, '.tmp');
-const SESSION_DIR = path.join(UPLOAD_DIR, '..', 'sessions');
+const SESSION_DIR = path.join(UPLOAD_DIR, '.sessions'); // inside volume → survives rebuilds
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
 const PORT           = process.env.PORT || 3000;
 
@@ -82,7 +82,7 @@ app.post('/logout', (req, res) => { req.session.destroy(() => res.redirect('/'))
 app.get('/api/files', requireAuth, (req, res) => {
   try {
     const files = fs.readdirSync(UPLOAD_DIR)
-      .filter(f => !f.endsWith('.meta') && f !== '.tmp')
+      .filter(f => !f.endsWith('.meta') && f !== '.tmp' && f !== '.sessions')
       .map(stored => {
         let meta = {};
         try { meta = JSON.parse(fs.readFileSync(path.join(UPLOAD_DIR, stored + '.meta'), 'utf8')); } catch (_) {}
@@ -215,7 +215,7 @@ app.delete('/api/files/:id', requireAuth, (req, res) => {
 // ── Stats ─────────────────────────────────────────────────────────────────────
 app.get('/api/stats', requireAuth, (req, res) => {
   try {
-    const files = fs.readdirSync(UPLOAD_DIR).filter(f => !f.endsWith('.meta') && f !== '.tmp');
+    const files = fs.readdirSync(UPLOAD_DIR).filter(f => !f.endsWith('.meta') && f !== '.tmp' && f !== '.sessions');
     const total = files.reduce((s, f) => { try { return s + fs.statSync(path.join(UPLOAD_DIR, f)).size; } catch(_){return s;} }, 0);
     res.json({ count: files.length, totalBytes: total });
   } catch (e) { res.status(500).json({ error: e.message }); }
